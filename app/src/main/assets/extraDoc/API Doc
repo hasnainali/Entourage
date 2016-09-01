@@ -1,0 +1,24 @@
+1. Registration new user
+Url : http://ecolaundryindia.com/Default.aspx
+
+    key                 value
+	name			    Hasnain
+	pickupaddress		Geeta bhawan
+	mobileno		    9981993264
+
+
+2. Place order
+Url : http://ecolaundryindia.com/Placeorde.aspx
+	key		            value
+	name		        Hasnain
+	mobileno	        9981993264
+	day		            Now/Today/Tomorrow
+	time		        10:00 AM to 11:00 AM
+	pickupaddress	    DM Tower Indore
+
+3. Update user profile
+Url : http://ecolaundryindia.com/UpdateProfile.aspx
+	key		            value
+	name		        Hasnain Ali
+	mobile		        9981993264
+	pickupaddress		Geeta bhawan
