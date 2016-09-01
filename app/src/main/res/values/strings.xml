@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Eco Laundry</string>
-    <string name="title_activity_services">ServicesActivity</string>
-    <string name="registration">Registration</string>
-    <string name="otp_verification">One Time Password</string>
-</resources>
