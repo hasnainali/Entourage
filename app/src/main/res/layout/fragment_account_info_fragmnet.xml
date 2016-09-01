@@ -1,0 +1,220 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/account_container"
+    android:layout_width="match_parent"
+    android:background="@color/bgColor"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/account_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="@dimen/abc_action_bar_default_height_material">
+
+        <TextView
+            android:id="@+id/ac_header_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Hello"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/account_header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <duxeye.com.entourage.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Your Name"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/textColor" />
+
+            <EditText
+                android:id="@+id/ac_et_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ac_et_bg_name"
+                android:cursorVisible="true"
+                android:gravity="left|center_vertical"
+                android:hint="Name"
+                android:maxLength="50"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textColor" />
+
+            <duxeye.com.entourage.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Your Email Address"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/textColor" />
+
+            <EditText
+                android:id="@+id/ac_et_email"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ac_et_bg_name"
+                android:cursorVisible="true"
+                android:gravity="left|center_vertical"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp"
+                android:maxLength="35"
+                android:paddingRight="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textColor" />
+
+            <duxeye.com.entourage.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Phone Number"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/textColor" />
+
+            <EditText
+                android:id="@+id/ac_et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ac_et_bg_name"
+                android:cursorVisible="true"
+                android:gravity="left|center_vertical"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textColor" />
+
+
+            <Button
+                android:id="@+id/ac_btn_update"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/update_btn"
+                android:gravity="center_horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/ac_btn_policy"
+                    android:layout_width="100dp"
+                    android:layout_height="39dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/privacybtn_policy_btn" />
+
+                <Button
+                    android:id="@+id/ac_btn_support"
+                    android:layout_width="100dp"
+                    android:layout_height="39dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/support_btn" />
+
+                <Button
+                    android:id="@+id/ac_btn_logout"
+                    android:layout_width="100dp"
+                    android:layout_height="39dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/logout_btn" />
+
+            </LinearLayout>
+
+            <duxeye.com.entourage.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Your Year Books"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/textColor" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_yearbooks"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <!--<RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/listbg">
+
+                <duxeye.com.entourage.customViews.CustomTextView
+                    android:id="@+id/tv_year_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="left"
+                    android:padding="8dp"
+                    android:text="Your Year Books"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/textColor" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/arrow_left" />
+
+            </RelativeLayout>-->
+
+            <Button
+                android:id="@+id/ac_btn_search_school"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/searchschool"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

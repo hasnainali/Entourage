@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 23
+        versionCode VERSION_CODE.toInteger()
+        versionName VERSION_NAME
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    provided 'com.android.support:support-annotations:23.2.1'
+}
+
+// New version can be uploaded with './gradlew clean :library:jar :library:uploadArchives'
+apply from: 'gradle-mvn-push.gradle'

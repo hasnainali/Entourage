@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="@drawable/dialog_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <duxeye.com.entourage.customViews.CustomTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Title"
+        android:textColor="@color/textColor"
+        android:textSize="20dp"
+        app:edittextfont="NEXA LIGHT.OTF" />
+
+    <duxeye.com.entourage.customViews.CustomEditText
+        android:id="@+id/et_category_name"
+        style="@style/Material.Widget.EditText.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edt_text_background"
+        android:cursorVisible="true"
+        android:drawablePadding="10dp"
+        android:gravity="left"
+        android:hint="Category Name"
+        android:inputType="textEmailAddress"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/textColor"
+        app:et_dividerColor="@android:color/transparent"
+        app:et_labelTextColor="@color/textColor"
+        app:et_supportMode="none" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginTop="20dp"
+        android:background="#aaaaaa"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <duxeye.com.entourage.customViews.CustomTextView
+            android:id="@+id/done"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Done"
+            android:textColor="@color/textColor"
+            android:textSize="20dp"
+            app:edittextfont="NEXA LIGHT.OTF" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:background="#aaaaaa"></View>
+
+        <duxeye.com.entourage.customViews.CustomTextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textColor="@color/textColor"
+            android:textSize="20dp"
+            app:edittextfont="NEXA LIGHT.OTF" />
+
+    </LinearLayout>
+
+</LinearLayout>

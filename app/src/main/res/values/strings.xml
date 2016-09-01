@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Entourage</string>
+    <string name="app_dialog_title">Entourage Link</string>
+    <string name="login">Login</string>
+    <string name="userid">Name</string>
+    <string name="password">Password</string>
+    <string name="i_dont_have_a_acount">I Don t have a account ?</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="register">Register</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="recive_update_from_school">Receive update from School</string>
+    <string name="recive_update_from_entourage">Receive update from Entourage</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register_user">REGISTER USER</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tabHome">Home</string>
+    <string name="tabphotos">Photos</string>
+    <string name="tabUpload">Upload</string>
+    <string name="tabyearbook">Yearbook</string>
+    <string name="tabacount">Account Info</string>
+
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/toolbar_with_back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <com.quinny898.library.persistentsearch.SearchBox
+        android:id="@+id/searchbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_actionbar"
+        android:background="@drawable/round_border" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchbox" />
+
+
+    <duxeye.com.entourage.customViews.CustomTextView
+        android:id="@+id/tv_no_address_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:cursorVisible="true"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Oops, no school found"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#5c5c5c"
+        android:textSize="20dp"
+        android:visibility="gone"
+        app:edittextfont="NEXA LIGHT.OTF" />
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/pv_progressbar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        app:pv_autostart="false"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/InOutColorsCircularProgressDrawableStyle" />
+
+</RelativeLayout>

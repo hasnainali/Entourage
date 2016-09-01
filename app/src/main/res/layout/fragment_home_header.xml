@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_slider"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bgColor"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_select_year_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center|center_vertical"
+        android:text="Selected Year Book Name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorPrimary" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/imagebg"
+        android:padding="5dp">
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <com.daimajia.slider.library.Indicators.PagerIndicator
+            android:id="@+id/custom_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            custom:selected_color="#555555"
+            custom:unselected_color="#55555555"
+            custom:shape="oval"
+            custom:selected_padding_left="3dp"
+            custom:selected_padding_right="3dp"
+            custom:unselected_padding_left="3dp"
+            custom:unselected_padding_right="3dp"
+            custom:selected_width="8dp"
+            custom:selected_height="8dp"
+            custom:unselected_width="4dp"
+            custom:unselected_height="4dp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

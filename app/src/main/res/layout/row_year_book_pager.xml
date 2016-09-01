@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor">
+
+    <TextView
+        android:id="@+id/tv_ybd_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorPrimary" />
+
+    <com.rey.material.widget.ProgressView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        app:pv_autostart="true"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/InOutColorsCircularProgressDrawableStyle" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_ybd_name"
+        android:layout_margin="0dp"
+        android:background="@drawable/bookbg"
+        android:visibility="visible">
+
+
+
+    </RelativeLayout>
+
+
+    <it.sephiroth.android.library.imagezoom.ImageViewTouch
+        android:id="@+id/iv_yb_big_image"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/tv_ybd_name"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
