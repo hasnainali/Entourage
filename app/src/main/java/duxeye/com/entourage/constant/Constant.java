@@ -46,6 +46,9 @@ public class Constant {
     public static String SCHOOL_NAME = "SCHOOL_NAME";
     public static String CATEGORY_ID = "CATEGORY_ID";
     public static String PHOTO_ID = "PHOTOT_ID";
+    public static String NEXT_PHOTO_ID = "NEXT_PHOTO_ID";
+    public static String  PRIOR_PHOTO_ID = "PRIOR_PHOTO_ID";
+    public static String  CATEGORY_PHOTO_ID = "CATEGORY_PHOTO_ID";
     public static String CURRENT_PAGE_INDEX = "CURRENT_PAGE_INDEX";
 //    public static String LEFT_WIP_PAGE_ID = "LEFT_WIP_PAGE_ID";
 //    public static String RIGHT_WIP_PAGE_ID = "RIGHT_WIP_PAGE_ID";

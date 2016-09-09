@@ -2,11 +2,7 @@ package duxeye.com.entourage.adapter;
 
 import android.app.Activity;
 
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.MediaStore;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.androidquery.AQuery;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import duxeye.com.entourage.ApplicationController;
 import duxeye.com.entourage.R;
+import duxeye.com.entourage.Utility.LoadImage;
 
 /**
  * Created by Hasnain on 24-07-2016.
@@ -78,7 +72,6 @@ public class SelectedImageAdapter extends RecyclerView.Adapter<SelectedImageAdap
         }
 
         public void bind(String uri, final int position, final ItemClickListener onItemClickListener) {
-
             Uri muUri = Uri.fromFile(new File(uri));
             Picasso.with(mActivity)
                     .load(muUri)

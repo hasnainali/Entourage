@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +63,7 @@ public class YearBookDetailsFragment extends Fragment {
     }
 
 
-    public class YearBookPagerAdapter extends FragmentPagerAdapter {
+    public class YearBookPagerAdapter extends FragmentStatePagerAdapter {
         public YearBookPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -69,7 +71,7 @@ public class YearBookDetailsFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             if(position == 0){
-                position =1;
+                position = 1;
             }
             return YearbookRowFragment.newInstance("" + position + "");
         }
@@ -78,6 +80,13 @@ public class YearBookDetailsFragment extends Fragment {
         public int getCount() {
             return Integer.parseInt(Utility.getSharedPreferences(getActivity(), Constant.NUMBER_PAGES_PROD));
         }
+
+        @Override
+        public int getItemPosition(Object object) {
+            // refresh all fragments when data set changed
+            return PagerAdapter.POSITION_NONE;
+        }
+
 
     }
 }

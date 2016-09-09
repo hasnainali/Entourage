@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:id="@+id/upload_container"
-    android:background="@color/bgColor"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor">
 
     <LinearLayout
         android:id="@+id/upload_header"
@@ -45,10 +45,11 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:text="SELECT CATEGORY"
+                android:background="@drawable/selectcategory"
                 android:paddingRight="25dp"
-                android:textColor="#6f6d6e"
-                android:background="@drawable/selectcategory" />
+                android:text="SELECT CATEGORY"
+                android:textAllCaps="false"
+                android:textColor="#6f6d6e" />
 
             <Button
                 android:id="@+id/btn_select_image"

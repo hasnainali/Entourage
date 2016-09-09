@@ -6,12 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-
 import duxeye.com.entourage.R;
+import duxeye.com.entourage.Utility.LoadImage;
 import duxeye.com.entourage.model.PhotoGrid;
 
 /**
@@ -24,7 +21,7 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridAdapter.MyVi
     private Activity mActivity;
 
     public interface ItemClickListener {
-        void onPhotoClick(PhotoGrid mPhotoGrid);
+        void onPhotoClick(PhotoGrid mPhotoGrid,int position);
     }
 
 
@@ -44,7 +41,7 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.bind(mArrayList.get(position), onItemClickListener);
+            holder.bind(mArrayList.get(position),position, onItemClickListener);
     }
 
     @Override
@@ -61,13 +58,13 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridAdapter.MyVi
         }
 
 
-        public void bind(final PhotoGrid mPhotoGrid, final ItemClickListener onItemClickListener) {
-            Picasso.with(mActivity).load(mPhotoGrid.getImageUrl()).into(photoImageView);
+        public void bind(final PhotoGrid mPhotoGrid, final int position, final ItemClickListener onItemClickListener) {
+            LoadImage.load(mActivity, mPhotoGrid.getImageUrl(), photoImageView);
 
             photoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onPhotoClick(mPhotoGrid);
+                    onItemClickListener.onPhotoClick(mPhotoGrid,position);
                 }
             });
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="0dp"
     android:weightSum="2">
@@ -16,8 +16,9 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_height="250dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="2dp">
 
             <com.rey.material.widget.ProgressView
                 android:layout_width="25dp"
@@ -32,6 +33,7 @@
             <duxeye.com.entourage.customViews.SquareLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
@@ -39,11 +41,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:cropToPadding="false"
-                    android:scaleType="centerCrop" />
+                    android:cropToPadding="false"/>
 
             </duxeye.com.entourage.customViews.SquareLayout>
-
 
 
         </android.support.v7.widget.CardView>
@@ -53,10 +53,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rrrrrr"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="1dp"
             android:gravity="center"
             android:text="Page Title Left"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/textColor" />
 
     </LinearLayout>
@@ -70,8 +70,9 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_height="250dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="2dp">
 
             <com.rey.material.widget.ProgressView
                 android:layout_width="25dp"
@@ -85,6 +86,7 @@
 
             <duxeye.com.entourage.customViews.SquareLayout
                 android:layout_width="match_parent"
+                android:layout_gravity="center"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -93,11 +95,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:cropToPadding="false"
-                    android:scaleType="centerCrop" />
+                    android:cropToPadding="false" />
 
             </duxeye.com.entourage.customViews.SquareLayout>
-
 
 
         </android.support.v7.widget.CardView>
@@ -106,11 +106,10 @@
             android:id="@+id/tv_ladder_yearbook_title_right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rrrrrr"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="1dp"
             android:gravity="center"
             android:text="Page Title Right"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/textColor" />
     </LinearLayout>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,10 +24,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -42,14 +46,17 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.rey.material.app.Dialog;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.UUID;
+
 import duxeye.com.entourage.R;
 import duxeye.com.entourage.Utility.Action;
 import duxeye.com.entourage.Utility.Utility;
@@ -77,7 +84,9 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
     private SelectedImageAdapter adapter;
     private String parentUUDID;
     private ImageLoader imageLoader;
-    private HorizontalProgressBar progressBar;
+//    private HorizontalProgressBar progressBar;
+
+    private android.app.Dialog mDialog;
 
     public UploadFragment() {
         // Required empty public constructor
@@ -87,7 +96,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_uplaod, container, false);
-        Utility.saveImageArrayList(getActivity(),Constant.IMAGE_ARRAY_LIST,new ArrayList<String>());
+        Utility.saveImageArrayList(getActivity(), Constant.IMAGE_ARRAY_LIST, new ArrayList<String>());
         init();
 
 //        initImageLoader();
@@ -331,11 +340,11 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
-                String[] imagesPath = data.getStringArrayExtra("all_path");
-                try{
+            String[] imagesPath = data.getStringArrayExtra("all_path");
+            try {
                 imagesPathList.clear();
-                Utility.saveImageArrayList(getActivity(),Constant.IMAGE_ARRAY_LIST,new ArrayList<String>());
-            }catch(Exception e){
+                Utility.saveImageArrayList(getActivity(), Constant.IMAGE_ARRAY_LIST, new ArrayList<String>());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             for (int i = 0; i < imagesPath.length; i++) {
@@ -343,7 +352,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
                 imagesPathList.add(imagesPath[i]);
             }
 
-            Utility.saveImageArrayList(getActivity(),Constant.IMAGE_ARRAY_LIST,imagesPathList);
+            Utility.saveImageArrayList(getActivity(), Constant.IMAGE_ARRAY_LIST, imagesPathList);
             refreshSelectedImage();
         }
     }
@@ -361,15 +370,48 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
     }
 
     class UploadImageToAmazonServer extends AsyncTask<Void, Integer, Void> {
-        //        private int noOfURLs;
         private ArrayList<UploadFileData> arrayList;
+        private TextView mTextView;
+        private Button cancelButton;
+        private ProgressBar mUploadProgressBar;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar = new HorizontalProgressBar(getActivity());
-            progressBar.setCancelable(false);
-            progressBar.show();
+//            progressBar = new HorizontalProgressBar(getActivity());
+//            progressBar.setCancelable(false);
+//            progressBar.show();
+
+            mDialog = new android.app.Dialog(getActivity());
+            mDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            mDialog.setContentView(R.layout.custom_progress_bar);
+            mDialog.getWindow().setLayout(-1, -2);
+            mDialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            mDialog.setCancelable(false);
+
+            mTextView = (TextView) mDialog.findViewById(R.id.timer);
+            cancelButton = (Button) mDialog.findViewById(R.id.btn_cancel);
+            mUploadProgressBar = (ProgressBar) mDialog.findViewById(R.id.progress_pv_linear_colors);
+
+            int sdk = android.os.Build.VERSION.SDK_INT;
+            int color = 0xFFFF0000;
+            if (sdk < 21) {
+                mUploadProgressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                mUploadProgressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
+
+
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getStatus() == AsyncTask.Status.RUNNING) {
+                        cancel(true);
+                    }
+                }
+            });
+
+            mDialog.show();
 
         }
 
@@ -387,32 +429,29 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
 
                 /**
                  *
-                 * Intent intent = new Intent(this, ImageUploadIntentService.class)
-                 .putExtra("image_to_upload", mImagePath);
-                 startService(intent);
-
                  */
                 parentUUDID = UUID.randomUUID().toString();
                 arrayList = new ArrayList<>();
+                AmazonS3Client mAmazonS3Client = new AmazonS3Client(new BasicAWSCredentials("AKIAJ62ZNGGKUCATRYZQ", "oXzlm38axdXOu2vIgVsHRgBNQdv6l+AS9rzkgjiX"));
+                String existingBucketName = "entourage-photos";
+                mAmazonS3Client.createBucket("entourage-photos");
+
                 for (int i = 0; i < imagesPathList.size(); i++) {
                     String imageUrl = imagesPathList.get(i);
-//                    noOfURLs = i;
-                    String existingBucketName = "entourage-photos";
+
                     String fileUDID = UUID.randomUUID().toString();
                     String fileName = "photos/DELIVERY_2016/YBID_" + Utility.getSharedPreferences(getActivity(), Constant.YEARBOOKID) + "/" + fileUDID + ".jpg";
-                    AmazonS3Client s3Client1 = new AmazonS3Client(new BasicAWSCredentials("AKIAJ62ZNGGKUCATRYZQ", " oXzlm38axdXOu2vIgVsHRgBNQdv6l+AS9rzkgjiX"));
-                    s3Client1.createBucket(existingBucketName);
-                    mFile = getResizeImage(imageUrl);
-                    PutObjectRequest por = new PutObjectRequest(existingBucketName, fileName, mFile);//key is  URL
 
-                    //making the object Public
-                    por.setCannedAcl(CannedAccessControlList.PublicReadWrite);
-                    s3Client1.putObject(por);
+//                    mFile = getResizeImage(imageUrl);
+                    mFile = new File(imageUrl);
+                    PutObjectRequest mPutObjectRequest = new PutObjectRequest(existingBucketName, fileName, mFile);//key is  URL
+
+                    mPutObjectRequest.setCannedAcl(CannedAccessControlList.PublicReadWrite);
+                    mAmazonS3Client.putObject(mPutObjectRequest);
                     String _finalUrl = "http://entourage-photos.s3.amazonaws.com/" + fileName;
-                    Log.e(TAG, "URL: " + _finalUrl);
+                    //Log.e(TAG, "URL: " + _finalUrl);
 
                     arrayList.add(new UploadFileData(fileUDID, fileName, _finalUrl));
-//                    Constant.uploadUrl.add(_finalUrl);
 
                     int currentProgress = (((i + 1) * 100) / imagesPathList.size());
                     Log.e(TAG, "currentProgress: " + currentProgress);
@@ -429,7 +468,11 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
 //                        e.printStackTrace();
 //                    }
 
-
+                    //Check if user clicked OK in the dialog
+                    if (isCancelled()) {
+                        //Exit the method if the user dismissed the dialog
+                        return null;
+                    }
 
                 }
 
@@ -445,14 +488,39 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                mDialog.dismiss();
+
+                try {
+                    if (arrayList.size() > 0) {
+                        uploadUrlToEntourageServer(arrayList);
+                    }
+                } catch (Exception ex) {
+
+                }
+
             }
 
             return null;
         }
 
         @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            try {
+                if (arrayList.size() > 0) {
+                    uploadUrlToEntourageServer(arrayList);
+                }
+            } catch (Exception e) {
+
+            }
+
+            mDialog.dismiss();
+        }
+
+        @Override
         protected void onProgressUpdate(Integer... progress) {
-            progressBar.setProgressBar(progress[0]);
+            mUploadProgressBar.setProgress(progress[0]);
+            mTextView.setText("" + progress[0] + "%");
         }
 
         @Override
@@ -462,49 +530,49 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private File getResizeImage(String photoPath) {
-        File mFile = null;
-        try {
-            /**
-             * Convert image path to Bitmap
-             */
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-            /**
-             * Re-size bitmap
-             */
-            Bitmap resized = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(photoPath, options), (int) (BitmapFactory.decodeFile(photoPath, options).getWidth() * 0.8), (int) (BitmapFactory.decodeFile(photoPath, options).getHeight() * 0.8), true);
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            resized.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-
-            //Create a new file name "test.jpg"
-            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+File.separator+"Entourage");
-            if (!mediaStorageDir.exists()) {
-                if (!mediaStorageDir.mkdirs()) {
-                    Log.e(TAG, "failed to create directory");
-                } else {
-                    mediaStorageDir.mkdir();
-                    Log.e(TAG, mediaStorageDir + " Directory created...");
-                }
-            }
-
-
-           mFile = new File(mediaStorageDir+File.separator+"test.jpg");
-            mFile.createNewFile();
-            //write the bytes in file
-            FileOutputStream fo = new FileOutputStream(mFile);
-            fo.write(bytes.toByteArray());
-
-            // Close FileOutput
-            fo.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return mFile;
-    }
+//    private File getResizeImage(String photoPath) {
+//        File mFile = null;
+//        try {
+//            /**
+//             * Convert image path to Bitmap
+//             */
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//
+//            /**
+//             * Re-size bitmap
+//             */
+//            Bitmap resized = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(photoPath, options), (int) (BitmapFactory.decodeFile(photoPath, options).getWidth() * 0.8), (int) (BitmapFactory.decodeFile(photoPath, options).getHeight() * 0.8), true);
+//            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//            resized.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+//
+//            //Create a new file name "test.jpg"
+//            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+File.separator+"Entourage");
+//            if (!mediaStorageDir.exists()) {
+//                if (!mediaStorageDir.mkdirs()) {
+//                    Log.e(TAG, "failed to create directory");
+//                } else {
+//                    mediaStorageDir.mkdir();
+//                    Log.e(TAG, mediaStorageDir + " Directory created...");
+//                }
+//            }
+//
+//
+//           mFile = new File(mediaStorageDir+File.separator+"test.jpg");
+//            mFile.createNewFile();
+//            //write the bytes in file
+//            FileOutputStream fo = new FileOutputStream(mFile);
+//            fo.write(bytes.toByteArray());
+//
+//            // Close FileOutput
+//            fo.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return mFile;
+//    }
 
     private void uploadUrlToEntourageServer(ArrayList<UploadFileData> arrayList) {
         try {
@@ -635,7 +703,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
                         /**
                          * Update photo list as well
                          */
-                        progressBar.dismiss();
+                        mDialog.dismiss();
 
                         Fragment fragment = new UploadedCompletedFragment();
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

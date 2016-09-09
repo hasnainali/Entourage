@@ -55,6 +55,15 @@ public class PhotosFragment extends Fragment implements Refresh {
         return mView;
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isResumed()){
+            getCategory();
+        }
+    }
+
     private void getCategory(){
         mProgressBar.start();
         mCategoryArrayList = new ArrayList<>();

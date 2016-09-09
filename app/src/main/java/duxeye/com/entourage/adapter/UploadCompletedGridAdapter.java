@@ -7,12 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import duxeye.com.entourage.R;
-import duxeye.com.entourage.model.PhotoGrid;
+import duxeye.com.entourage.Utility.LoadImage;
 
 /**
  * Created by User on 23-07-2016.
@@ -26,7 +25,6 @@ public class UploadCompletedGridAdapter extends RecyclerView.Adapter<UploadCompl
     public interface ItemClickListener {
         void onPhotoClick(String url);
     }
-
 
 
     public UploadCompletedGridAdapter(Activity mActivity, ArrayList<String> mArrayList, ItemClickListener listener) {
@@ -65,7 +63,7 @@ public class UploadCompletedGridAdapter extends RecyclerView.Adapter<UploadCompl
 
 
         public void bind(final String url, final ItemClickListener onItemClickListener) {
-            Picasso.with(mActivity).load(url).into(photoImageView);
+            LoadImage.load(mActivity, url, photoImageView);
 
             photoImageView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -59,13 +59,13 @@ public class YearbookRowFragment extends Fragment {
 
 
     public void setImageAndText(int position) {
-        Log.e(TAG, "getImageUrl: " + position);
+//        Log.e(TAG, "getImageUrl: " + position);
         String url = Constant.PAGE_INFORMATION + Utility.getSharedPreferences(getActivity(), Constant.YEARBOOKID) + "&page=" + position + "&credential_key=" + Utility.getSharedPreferences(getActivity(), Constant.CREDENTIALKEY);
-        Log.e(TAG, "Url: " + url);
+//        Log.e(TAG, "Url: " + url);
         new AQuery(getActivity()).ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject json, AjaxStatus status) {
-                Log.e(TAG, "Response: " + json);
+//                Log.e(TAG, "Response: " + json);
                 if (json != null) {
                     try {
                         if (json.has("status")) {

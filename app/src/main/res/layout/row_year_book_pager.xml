@@ -26,19 +26,6 @@
         app:pv_progressStyle="@style/InOutColorsCircularProgressDrawableStyle" />
 
 
-    <RelativeLayout
-        android:id="@+id/relativelayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tv_ybd_name"
-        android:layout_margin="0dp"
-        android:background="@drawable/bookbg"
-        android:visibility="visible">
-
-
-
-    </RelativeLayout>
-
 
     <it.sephiroth.android.library.imagezoom.ImageViewTouch
         android:id="@+id/iv_yb_big_image"

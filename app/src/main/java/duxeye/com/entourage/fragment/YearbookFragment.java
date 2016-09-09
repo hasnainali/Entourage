@@ -76,10 +76,10 @@ public class YearbookFragment extends Fragment {
             public void onPhotoClick(LadderYearBook mLadderYearBook,int position,boolean isLeft,boolean isRight) {
 //                Log.e(TAG,"Position: "+position);
                 if(isLeft){
-                    Utility.setSharedPreference(getActivity(),Constant.CURRENT_PAGE_INDEX,""+((position * 2) + 1)+"");
+                    Utility.setSharedPreference(getActivity(),Constant.CURRENT_PAGE_INDEX,""+((position * 2) + 0)+"");
                 }
                 if(isRight){
-                    Utility.setSharedPreference(getActivity(),Constant.CURRENT_PAGE_INDEX,""+((position * 2) + 2)+"");
+                    Utility.setSharedPreference(getActivity(),Constant.CURRENT_PAGE_INDEX,""+((position * 2) + 1)+"");
                 }
 
                 Fragment fragment = new YearBookDetailsFragment();

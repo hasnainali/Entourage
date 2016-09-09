@@ -23,4 +23,7 @@
     <string name="tabyearbook">Yearbook</string>
     <string name="tabacount">Account Info</string>
 
+    <!-- Hard code text for Heading -->
+    <string name="photo_details">PHOTO DETAILS</string>
+
 </resources>

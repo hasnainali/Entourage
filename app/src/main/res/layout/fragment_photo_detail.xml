@@ -25,13 +25,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_margin="8dp"
+            android:layout_margin="20dp"
             android:background="@drawable/back_icon" />
 
         <ImageView
             android:id="@+id/iv_pd_back"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:layout_margin="8dp" />
 

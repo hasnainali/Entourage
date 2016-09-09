@@ -24,13 +24,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="18dp"
             android:background="@drawable/back_icon" />
 
         <ImageView
             android:id="@+id/iv_ybd_back"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_centerVertical="true"
             android:layout_margin="8dp" />
 

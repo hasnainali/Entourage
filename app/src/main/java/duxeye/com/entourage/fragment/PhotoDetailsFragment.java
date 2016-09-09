@@ -23,11 +23,17 @@ import com.androidquery.callback.AjaxStatus;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import duxeye.com.entourage.R;
+import duxeye.com.entourage.Utility.LoadImage;
 import duxeye.com.entourage.Utility.Utility;
 import duxeye.com.entourage.constant.Constant;
 import duxeye.com.entourage.customViews.CircularProgressBar;
 import duxeye.com.entourage.customViews.MyDialog;
+import duxeye.com.entourage.model.PhotoDetails;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,20 +43,26 @@ public class PhotoDetailsFragment extends Fragment {
     private View mView;
     private ViewPager mViewPager;
     private PhotoDetailPagerAdapter mPagerAdapter;
-    private int lastPosition = 0;
+    private int selectedPosition,lastPosition = 0;
+//    private boolean isFirstTime = true;
 //    private ImageView penImageView;
 //    private ImageViewTouch bigImageView;
 //    private TextView fromTextView, imageNameTextView, sizeTextView, dateTextView;
 //    private EditText captionEditText;
 //    private String next_photo_id, prior_photo_id, category_photo_id;
-    private CircularProgressBar mProgressBar;
+//    private CircularProgressBar mProgressBar;
 //    private RelativeLayout mPhotoLayout;
 //    private ScaleGestureDetector mGestureDetector;
 //    private Matrix matrix = new Matrix();
 //    private float scale = 1f;
 
+    private ArrayList<PhotoDetails> mArrayList = new ArrayList<>();
+
     public PhotoDetailsFragment() {
-        // Required empty public constructor
+        /**
+         *   Required empty public constructor
+         */
+
     }
 
 
@@ -79,15 +91,27 @@ public class PhotoDetailsFragment extends Fragment {
                     /**
                      * Left
                      */
+                    Log.e(TAG, "onPageSelected Left call");
+//                    if (Utility.getSharedPreferences(getActivity(), Constant.PRIOR_PHOTO_ID).equalsIgnoreCase("")) {
+//                        Toast.makeText(getActivity(), "You are at 1st photo", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Utility.setSharedPreference(getActivity(), Constant.PHOTO_ID, Utility.getSharedPreferences(getActivity(), Constant.PRIOR_PHOTO_ID));
 
-                Log.e(TAG,"Left");
+//                    }
 
-                } else if(lastPosition < position) {
+                } else if (lastPosition < position) {
                     /**
                      * Right
                      */
-                    lastPosition=position;
-                    Log.e(TAG,"Right");
+                    Log.e(TAG, "onPageSelected Right call");
+                    lastPosition = position;
+//                    if (Utility.getSharedPreferences(getActivity(), Constant.NEXT_PHOTO_ID).equalsIgnoreCase("")) {
+//                        Toast.makeText(getActivity(), "No more next", Toast.LENGTH_SHORT).show();
+//                    } else {
+
+                        Utility.setSharedPreference(getActivity(), Constant.PHOTO_ID, Utility.getSharedPreferences(getActivity(), Constant.NEXT_PHOTO_ID));
+//                    }
+
                 }
 
             }
@@ -97,6 +121,7 @@ public class PhotoDetailsFragment extends Fragment {
 
             }
         });
+
 //        captionEditText.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -149,7 +174,6 @@ public class PhotoDetailsFragment extends Fragment {
 //                                    prior_photo_id = json.getString("prior_photo_id");
 //                                    category_photo_id = json.getString("category_photo_id");
 //                                    Picasso.with(getActivity()).load(json.getString("image").replace("[", "%5B").replace("]", "%5D")).into(bigImageView);
-//
 //
 //                                } catch (Exception e) {
 //                                    e.printStackTrace();
@@ -215,7 +239,7 @@ public class PhotoDetailsFragment extends Fragment {
     }
 
     private void init() {
-        ((TextView) mView.findViewById(R.id.pd_header_text)).setText("PHOTO DETAILS");
+        ((TextView) mView.findViewById(R.id.pd_header_text)).setText(getActivity().getResources().getString(R.string.photo_details));
 //        backButton = (ImageView) mView.findViewById(R.id.iv_pd_back);
 //        bigImageView = (ImageViewTouch) mView.findViewById(R.id.iv_big_image);
 //        penImageView = (ImageView) mView.findViewById(R.id.iv_pen);
@@ -227,15 +251,22 @@ public class PhotoDetailsFragment extends Fragment {
 
 //        captionEditText = (EditText) mView.findViewById(R.id.et_caption);
 //        captionEditText.setTextColor(getActivity().getResources().getColor(R.color.textColor));
-
-        mProgressBar = new CircularProgressBar(getActivity());
-        mProgressBar.setCancelable(false);
-
 //        mPhotoLayout = (RelativeLayout) mView.findViewById(R.id.relativelayout);
+
+//        mProgressBar = new CircularProgressBar(getActivity());
+//        mProgressBar.setCancelable(false);
+
         mViewPager = (ViewPager) mView.findViewById(R.id.vp_pd_pager);
         mPagerAdapter = new PhotoDetailPagerAdapter(getActivity().getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
-//        mViewPager.setCurrentItem(Integer.parseInt(Utility.getSharedPreferences(getActivity(), Constant.CURRENT_PAGE_INDEX)));
+        /**
+         * Set default pager position
+         */
+        selectedPosition = Integer.parseInt(Utility.getSharedPreferences(getActivity(), Constant.CURRENT_PAGE_INDEX));
+        mViewPager.setCurrentItem(selectedPosition);
+
+
+        getUIData(Utility.getSharedPreferences(getActivity(),Constant.PHOTO_ID), selectedPosition);
 //        getImageDetails();
     }
 
@@ -248,7 +279,7 @@ public class PhotoDetailsFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-//    private void getImageDetails() {
+//    private void getImageDetails(final boolean isRight) {
 //        String url = Constant.PHOTO_DETAILS + Utility.getSharedPreferences(getActivity(), Constant.PHOTO_ID) + "&yearbook_id=" + Utility.getSharedPreferences(getActivity(), Constant.YEARBOOKID) + "&credential_key=" + Utility.getSharedPreferences(getActivity(), Constant.CREDENTIALKEY);
 ////        Log.e(TAG, "Url: " + url);
 //        new AQuery(getActivity()).ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
@@ -257,15 +288,22 @@ public class PhotoDetailsFragment extends Fragment {
 ////                Log.e(TAG, "Response: " + json);
 //                if (json != null) {
 //                    try {
-//                        imageNameTextView.setText(json.getString("photo_file"));
-//                        fromTextView.setText(json.getString("uploaded_by"));
-//                        captionEditText.setText(json.getString("photo_caption"));
-//                        sizeTextView.setText(json.getString("exphoto_width") + " * " + json.getString("exphoto_height"));
-//                        dateTextView.setText(json.getString("create_date"));
-//                        next_photo_id = json.getString("next_photo_id");
-//                        prior_photo_id = json.getString("prior_photo_id");
-//                        category_photo_id = json.getString("category_photo_id");
-//                        Picasso.with(getActivity()).load(json.getString("image").replace("[", "%5B").replace("]", "%5D")).into(bigImageView);
+////                        imageNameTextView.setText(json.getString("photo_file"));
+////                        fromTextView.setText(json.getString("uploaded_by"));
+////                        captionEditText.setText(json.getString("photo_caption"));
+////                        sizeTextView.setText(json.getString("exphoto_width") + " * " + json.getString("exphoto_height"));
+////                        dateTextView.setText(json.getString("create_date"));
+////                        next_photo_id = json.getString("next_photo_id");
+////                        prior_photo_id = json.getString("prior_photo_id");
+////                        category_photo_id = json.getString("category_photo_id");
+//
+//                        if(isRight){
+//                            Utility.setSharedPreference(getActivity(),Constant.PHOTO_ID, json.getString("next_photo_id"));
+//                        }else{
+//                            Utility.setSharedPreference(getActivity(),Constant.PHOTO_ID, json.getString("next_photo_id"));
+//                        }
+//
+////                        Picasso.with(getActivity()).load(json.getString("image").replace("[", "%5B").replace("]", "%5D")).into(bigImageView);
 //
 //
 //                    } catch (Exception e) {
@@ -330,7 +368,25 @@ public class PhotoDetailsFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return PhotoDetailRowFragment.newInstance(Utility.getSharedPreferences(getActivity(), Constant.PHOTO_ID));
+            Log.e(TAG, "Position : " + position);
+//
+//            if (position != selectedPosition) {
+//
+//            }
+            /**
+             * Return only blank fragment
+             */
+            return PhotoDetailRowFragment.newInstance();
+
+//            } else if (currentPositio > position) {
+//                currentPositio = position;
+//                return PhotoDetailRowFragment.newInstance(Utility.getSharedPreferences(getActivity(), Constant.NEXT_PHOTO_ID));
+//            } else if(currentPositio < position){
+//                currentPositio = position;
+//                return PhotoDetailRowFragment.newInstance(Utility.getSharedPreferences(getActivity(), Constant.PRIOR_PHOTO_ID));
+//            }
+//
+//            return getUIData(Utility.getSharedPreferences(getActivity(), Constant.PRIOR_PHOTO_ID), position);
         }
 
         @Override
@@ -338,6 +394,48 @@ public class PhotoDetailsFragment extends Fragment {
             return Integer.parseInt(Utility.getSharedPreferences(getActivity(), Constant.PHOTO_COUNT));
         }
 
+    }
+
+
+    public void getUIData(String photoID, final int position) {
+        String url = Constant.PHOTO_DETAILS + photoID + "&yearbook_id=" + Utility.getSharedPreferences(getActivity(), Constant.YEARBOOKID) + "&credential_key=" + Utility.getSharedPreferences(getActivity(), Constant.CREDENTIALKEY);
+        Log.e(TAG, "Url: " + url);
+        new AQuery(getActivity()).ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
+            @Override
+            public void callback(String url, JSONObject json, AjaxStatus status) {
+                Log.e(TAG, "Response: " + json);
+                if (json != null) {
+                    try {
+
+                        try {
+                            mArrayList.get(position);
+                        } catch (IndexOutOfBoundsException e) {
+                            mArrayList.add(position, new PhotoDetails(
+                                    json.getString("photo_file"),
+                                    json.getString("uploaded_by"),
+                                    json.getString("photo_caption"),
+                                    json.getString("exphoto_width") + " * " + json.getString("exphoto_height"),
+                                    json.getString("create_date"),
+                                    json.getString("next_photo_id"),
+                                    json.getString("prior_photo_id"),
+                                    json.getString("category_photo_id"),
+                                    json.getString("image").replace("[", "%5B").replace("]", "%5D")));
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    if (Utility.isConnectingToInternet()) {
+                        MyDialog.iPhone("No response from server\nPlease try again!", getActivity());
+
+                    } else {
+                        Utility.showInternetAlert(getActivity());
+                    }
+                }
+            }
+        });
     }
 
 }

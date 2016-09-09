@@ -98,8 +98,9 @@ public class GridPhotoFragment extends Fragment {
         photoGridView.setItemAnimator(new DefaultItemAnimator());
         photoGridView.setAdapter(new PhotoGridAdapter(getActivity(),mPhotoGridArrayList, new PhotoGridAdapter.ItemClickListener() {
             @Override
-            public void onPhotoClick(PhotoGrid mPhotoGrid) {
+            public void onPhotoClick(PhotoGrid mPhotoGrid,int position) {
                 Utility.setSharedPreference(getActivity(), Constant.PHOTO_ID,mPhotoGrid.getPhotoId());
+                Utility.setSharedPreference(getActivity(),Constant.CURRENT_PAGE_INDEX,""+position+"");
                 photoDetailsFragment();
 
             }

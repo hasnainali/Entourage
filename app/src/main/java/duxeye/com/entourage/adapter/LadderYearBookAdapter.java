@@ -7,12 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-
 import duxeye.com.entourage.R;
+import duxeye.com.entourage.Utility.LoadImage;
 import duxeye.com.entourage.model.LadderYearBook;
 
 /**
@@ -70,8 +67,8 @@ public class LadderYearBookAdapter extends RecyclerView.Adapter<LadderYearBookAd
 
 
         public void bind(final LadderYearBook mLadderYearBook,final int position, final ItemClickListener onItemClickListener) {
-            Picasso.with(mActivity).load(mLadderYearBook.getLeftPageImg()).into(photoImageViewLeft);
-            Picasso.with(mActivity).load(mLadderYearBook.getRightPageImg()).into(photoImageViewRight);
+            LoadImage.load(mActivity, mLadderYearBook.getLeftPageImg(), photoImageViewLeft);
+            LoadImage.load(mActivity, mLadderYearBook.getRightPageImg(),photoImageViewRight);
             ladderTextViewLeft.setText(mLadderYearBook.getLeftPageLabel());
             ladderTextViewRight.setText(mLadderYearBook.getRightPageLabel());
 
