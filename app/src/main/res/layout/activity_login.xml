@@ -42,7 +42,7 @@
                 android:layout_marginTop="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/userid"
-                android:hint="@string/userid"
+                android:hint="User Id"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="50dp"
                 android:text=""
@@ -98,7 +98,7 @@
             android:layout_gravity="center"
             android:text="@string/i_dont_have_a_acount"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             app:edittextfont="NEXA LIGHT.OTF"
             app:edittextfontHint="NEXA LIGHT.OTF" />
 

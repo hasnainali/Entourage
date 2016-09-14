@@ -38,6 +38,30 @@ public class MyDialog {
         return dd;
     }
 
+    public static Dialog logout(String title, Context context) {
+        final Dialog dd = new Dialog(context);
+        try {
+
+            dd.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dd.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dd.setContentView(R.layout.dialog_logout);
+            dd.getWindow().setLayout(-1, -2);
+            dd.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            ((TextView) dd.findViewById(R.id.title)).setText(title);
+            (dd.findViewById(R.id.yes)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dd.dismiss();
+                }
+            });
+            dd.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dd;
+    }
+
 
     public static Dialog zoomImage(Context context,ImageViewTouch mImageViewTouch) {
         final Dialog dd = new Dialog(context);

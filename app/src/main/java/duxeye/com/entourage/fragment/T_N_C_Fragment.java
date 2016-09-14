@@ -58,13 +58,19 @@ public class T_N_C_Fragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new AccountInfoFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.account_container, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.setCustomAnimations(R.anim.trans_right_in, R.anim.trans_right_out);
-                fragmentTransaction.commit();
+
+                if (mWebView.canGoBack()) {
+                    mWebView.goBack();
+                } else {
+                    Fragment fragment = new AccountInfoFragment();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.account_container, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.setCustomAnimations(R.anim.trans_right_in, R.anim.trans_right_out);
+                    fragmentTransaction.commit();
+                }
+
             }
         });
 

@@ -73,15 +73,35 @@ public class AccountInfoFragment extends Fragment {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.clearSharedPreference(getActivity());
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
-                getActivity().finish();
+
+                final android.app.Dialog mDialog = MyDialog.logout("Are you sure you want to Logout?", getActivity());
+
+                (mDialog.findViewById(R.id.yes)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Utility.clearSharedPreference(getActivity());
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
+                        getActivity().finish();
+
+
+                    }
+                });
+
+                (mDialog.findViewById(R.id.no)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDialog.dismiss();
+                    }
+                });
+
+
 
 
             }

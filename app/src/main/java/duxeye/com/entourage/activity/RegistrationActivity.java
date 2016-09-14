@@ -121,6 +121,15 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
                                         mProgressBar.stop();
+
+                                        /***
+                                         * Clear shared prefrences here
+                                         */
+                                        try{
+                                            Utility.clearSharedPreference(mActivity);
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
                                         Intent intent = new Intent(mActivity, YearBooksActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

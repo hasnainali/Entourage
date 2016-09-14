@@ -85,6 +85,12 @@ public class LoginActivity extends AppCompatActivity {
                                 try {
                                     if (json.getString("status").equalsIgnoreCase("SUCCESS")) {
 
+                                        try{
+                                            Utility.clearSharedPreference(mActivity);
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+
                                         Utility.setSharedPreference(mActivity, Constant.MEMBERID, json.getString("member_id"));
                                         Utility.setSharedPreference(mActivity, Constant.CREDENTIALKEY, json.getString("credential_key"));
 
